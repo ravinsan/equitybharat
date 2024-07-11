@@ -1,5 +1,5 @@
 {
-  "name": "quitybharat",
+  "name": "equitybharat",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
@@ -12,6 +12,7 @@
   "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
     "express": "^4.19.2",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",

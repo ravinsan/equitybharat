@@ -1,10 +1,13 @@
 import express from "express"
 import admin from "./route/admin.js"
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));   // isase form data ya row dono ke liye use hoga
 app.use(express.json());    //ager data row se send krenge tab use hoga 
+app.use(cookieParser());
+
 
 app.use('/admin', admin);
 
