@@ -5,77 +5,78 @@ import jwt from "jsonwebtoken";
 import { SECREST_KEY, SECRET_KEY_EXPIRE } from "../envhandler.js";
 
 export const signUp = async (req, res) => {
-    
-    const { name, email, password, mobile, status } = req.body;
-    const data = { name, email, password, mobile };
-    
-    // Validate data
-    const { error, value } = userSchema.validate(data);
+  const { name, email, password, mobile, status } = req.body;
+  const data = { name, email, password, mobile };
 
-    if (error) {
-        return res.status(400).json({ message: error.details[0].message });
-    }
+  // Validate data
+  const { error } = userSchema.validate(data);
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
 
-    try {
-        const userData = {
-            name: name,
-            email: email,
-            password: hashedPassword,
-            mobile: mobile,
-            status: status
-        };
+  // Hash password
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-        const user = await User.create(userData);
+  try {
+    const userData = {
+      name: name,
+      email: email,
+      password: hashedPassword,
+      mobile: mobile,
+      status: status,
+    };
 
-        res.status(201).json({
-            message: "User created successfully",
-            user: user
-        });
-    } catch (error) {
-        res.status(500).json({
-            message: error.message
-        });
-    }
+    const user = await User.create(userData);
+
+    res.status(201).json({
+      message: "User created successfully",
+      user: user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 };
 
 export const signIn = async (req, res) => {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
-    try {
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(404).json({ message: "User not found!" });
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-
-        if (!isMatch) {
-            return res.status(401).json({ message: "Incorrect password!" });
-        }
-
-        const token = jwt.sign({ email }, SECREST_KEY, { expiresIn: SECRET_KEY_EXPIRE });
-
-        res.cookie('token', token, {
-            httpOnly: true, 
-            secure: true, 
-            maxAge: 24 * 60 * 60 * 1000, 
-         });
-
-        res.status(200).json({
-            message: "Sign in successful",
-            token: token
-        });
-    } catch (error) {
-        res.status(500).json({
-            message: error.message
-        });
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
     }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({ message: "Incorrect password!" });
+    }
+
+    const token = jwt.sign({ email }, SECREST_KEY, {
+      expiresIn: SECRET_KEY_EXPIRE,
+    });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    res.status(200).json({
+      message: "Sign in successful",
+      token: token,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 };
 
 export const logOut = async (req, res) => {
-    res.clearCookie('token');
-    res.status(200).json({message:"You have successfully logout!"});
-}
+  res.clearCookie("token");
+  res.status(200).json({ message: "You have successfully logout!" });
+};

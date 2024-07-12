@@ -1,0 +1,30 @@
+{
+    "env": {
+      "node": true,
+      "es2021": true
+    },
+    "extends": [
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "ignorePatterns": [
+      "node_modules/",
+      ".env"
+    ],
+    "rules": {
+      // Add specific rules if needed
+    },
+    "overrides": [
+      {
+        "files": ["src/**/*.js"],
+        "excludedFiles": "*.test.js",
+        "rules": {
+          // Add specific rules for src folder files if needed
+        }
+      }
+    ]
+  }
+  
