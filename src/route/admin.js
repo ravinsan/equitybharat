@@ -3,6 +3,7 @@ import {signUp, signIn, logOut}  from "../controllers/authController.js";
 import {dashboard}  from "../controllers/dashboardController.js";
 import { Index, Store, View, update, destroy} from "../controllers/RoleController.js";
 import { indexMenu, storeMenu, viewMenu, updateMenu, destroyMenu} from "../controllers/MenuController.js";
+import { indexPermission, storePermission, viewPermission, updatePermission, destroyPermission} from "../controllers/PermissionController.js";
 import verifyToken from "../middleware/userAuth.js";
 
 const Route = Router();
@@ -28,5 +29,13 @@ Route.post('/menus/create', verifyToken, storeMenu);
 Route.get('/menus/:id', verifyToken, viewMenu);
 Route.put('/menus/update/:id', verifyToken, updateMenu);
 Route.delete('/menus/delete/:id', verifyToken, destroyMenu);
+
+/* Permission */
+Route.get('/permissions', verifyToken, indexPermission);
+Route.post('/permissions/create', verifyToken, storePermission);
+Route.get('/permissions/:id', verifyToken, viewPermission);
+Route.put('/permissions/update/:id', verifyToken, updatePermission);
+Route.delete('/permissions/delete/:id', verifyToken, destroyPermission);
+
 
 export default Route;
