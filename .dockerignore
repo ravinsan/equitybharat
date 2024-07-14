@@ -1,0 +1,17 @@
+npm-debug.log
+.env.sample
+.eslintrc.json
+.prettierignore
+.prettierrc
+eslint.config.js
+
+**/node_modules/
+**/node_modules_linux/
+**/Dockerfile-prod
+**/Dockerfile-tools
+**/.dockerignore
+**/.gitignore
+**/.git
+**/README.md
+**/LICENSE
+**/.vscode
