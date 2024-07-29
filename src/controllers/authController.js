@@ -66,8 +66,9 @@ export const signIn = async (req, res) => {
     });
 
     res.status(200).json({
-      message: "Sign in successful",
+      message: "You have successfully login.",
       token: token,
+	  user : user
     });
   } catch (error) {
     res.status(500).json({

@@ -8,6 +8,10 @@ const RoleSchema = new mongoose.Schema({
     },
     guard:{
         type:String
+    },
+    status : {
+        type:Boolean,
+        default:1
     }
 }, {timestamps:true});
 
